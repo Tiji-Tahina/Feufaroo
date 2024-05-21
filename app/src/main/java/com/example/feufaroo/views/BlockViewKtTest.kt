@@ -13,7 +13,7 @@ class BlockViewKtTest{
 
     @Test
     fun testFileReading(){
-        val file = readFileLine(filename)
+        val file = readFileLine(fileName)
         assertEquals("|", file[0])
     }
 }
