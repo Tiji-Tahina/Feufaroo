@@ -17,6 +17,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.feufaroo.ui.theme.FeufarooTheme
+import java.io.File
+
+
+// read the file here
+var filename = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\com\\example\\feufaroo\\assets\\ProjectTemplateSample.txt"
+fun readFileLine(fileName: String): List<String> = File(fileName).bufferedReader().readLines()
+
 
 @Composable
 fun BlockCard (block: Block) {
@@ -56,10 +63,12 @@ fun BlockCard (block: Block) {
 fun SimpleTextFieldSample() {
     var text by remember { mutableStateOf("") }
     TextField(
-        value = text,         onValueChange = { newText ->
+        value = text,
+        onValueChange = { newText ->
             // Handle the text change here
             text = newText
-        },         label = { Text("Enter something") }
+        },
+        label = { Text("Enter something") }
         // Add other parameters to customize the TextField
     )
 }
@@ -68,9 +77,11 @@ fun SimpleTextFieldSample() {
 @Composable
 fun BlockCardPreview () {
     FeufarooTheme {
-        Row {
-            BlockCard(Block("Fortissimo", listOf("do","do","re","do"), lyrics = "\"Tia\"" ))
-            BlockCard(Block("Fortissimo", listOf("do","do","re","do"), lyrics = "\"Tia\"" ))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+//            BlockCard(Block("Fortissimo", listOf("do","do","re","do"), lyrics = "\"Tia\"" ))
+//            SimpleTextFieldSample()
         }
     }
 }
