@@ -2,15 +2,11 @@ package com.example.feufaroo.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,10 +17,24 @@ import java.io.File
 
 
 // read the file here
-var filename = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\com\\example\\feufaroo\\assets\\ProjectTemplateSample.txt"
+var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\com\\example\\feufaroo\\assets\\ProjectTemplateSample.txt"
 fun readFileLine(fileName: String): List<String> = File(fileName).bufferedReader().readLines()
 
+val fileInline = readFileLine(fileName)
 
+
+@Composable
+fun SampleDataInRows(){
+    LazyColumn(
+        modifier = Modifier.padding(8.dp)
+    ) {
+        items(fileInline) { line ->
+            Text(line)
+        }
+    }
+}
+
+/*
 @Composable
 fun BlockCard (block: Block) {
     Column (
@@ -57,31 +67,12 @@ fun BlockCard (block: Block) {
             .background(Color.DarkGray))
     }
 }
-
-// trying a user entry
-@Composable
-fun SimpleTextFieldSample() {
-    var text by remember { mutableStateOf("") }
-    TextField(
-        value = text,
-        onValueChange = { newText ->
-            // Handle the text change here
-            text = newText
-        },
-        label = { Text("Enter something") }
-        // Add other parameters to customize the TextField
-    )
-}
+*/
 
 @Preview(showBackground = true)
 @Composable
 fun BlockCardPreview () {
     FeufarooTheme {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-//            BlockCard(Block("Fortissimo", listOf("do","do","re","do"), lyrics = "\"Tia\"" ))
-//            SimpleTextFieldSample()
-        }
+        SampleDataInRows()
     }
 }
