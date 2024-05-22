@@ -3,7 +3,7 @@ package com.example.feufaroo.views
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,15 +19,22 @@ import java.io.File
 var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\com\\example\\feufaroo\\assets\\ProjectTemplateSample.txt"
 fun readFileLine(fileName: String): List<String> = File(fileName).bufferedReader().readLines()
 
-val fileInline = readFileLine(fileName)
+val textLines = readFileLine(fileName)
 
 // TODO : make a loop from text to object
 var block = Block(marking = "", separator = ":", choir = listOf("s1","m1","d","d1"), lyrics = "")
 var block2 = Block(marking = "", separator = ":", choir = listOf("f","l1","l1","r1"), lyrics = "")
 
+var separators = listOf("\n","|",":")
+var endBlock = "==="
+var
 
+fun createBlocks(){
+    for (line in textLines)  {
 
-// make a composable for the block object
+    }
+}
+
 @Composable
 fun BlockCard (block: Block) {
     Row (
@@ -70,23 +77,16 @@ fun BlockCardPreview () {
         Row(
             modifier = Modifier.padding(1.dp)
         ) {
-            // here also a loop for all the block objects ...
+            // loop through the instanciated blocks
+            /*
+            LazyRow(
+                modifier = Modifier.padding(5.dp)
+            ) { items(blocks) { block -> BlockCard(block) } }
+            */
             BlockCard(block = block)
             BlockCard(block2)
         }
     }
 }
 
-// one LazyRow example
-/*
-@Composable
-fun SampleDataInRows(){
-    LazyColumn(
-        modifier = Modifier.padding(8.dp)
-    ) {
-        items(fileInline) { line ->
-            Text(line)
-        }
-    }
-}
-*/
+
