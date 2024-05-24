@@ -15,25 +15,45 @@ import com.example.feufaroo.ui.theme.FeufarooTheme
 import java.io.File
 
 
-// read the file here
+// TODO: use the context with permissions but not absolute path like that
 var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\com\\example\\feufaroo\\assets\\ProjectTemplateSample.txt"
 fun readFileLine(fileName: String): List<String> = File(fileName).bufferedReader().readLines()
 
+//Maybe clean the data
 val textLines = readFileLine(fileName)
+// parameters for that specific template sample
+val separators = listOf(":", "|", "/")
+const val endBlock = "===="
+// TODO: work on logic behind lyrics
+const val lyrics = "[]" // just skip it for now
 
-// TODO : make a loop from text to object
-var block = Block(marking = "", separator = ":", choir = listOf("s1","m1","d","d1"), lyrics = "")
-var block2 = Block(marking = "", separator = ":", choir = listOf("f","l1","l1","r1"), lyrics = "")
+fun createBlocks(textLines: List<String>, separator: List<String>, endBlock: String, lyrics: String) : MutableList<Block> {
+    val blocks : MutableList<Block> = mutableListOf()
 
-var separators = listOf("\n","|",":")
-var endBlock = "==="
-var
-
-fun createBlocks(){
-    for (line in textLines)  {
+    // TODO: define a logic for the number of objects
+    for (i in 1..48){
+        val block = Block()
+        // for a single block should not go through all the entries of textLines
+        for (line in textLines){
+            when (line) {
+                in separators -> block.separator = line
+                lyrics -> continue
+                endBlock -> break
+                else -> block.choir.add(line)    // all valid notes not listed (yet) / maybe find match with regex
+            }
+            // we have to keep track of the lines in between the objects
+            blocks.add(block)
+        }
 
     }
+    return blocks
 }
+
+val blocks = createBlocks(textLines, separators, endBlock, lyrics)
+
+// Dummy blocks for tests
+var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
+var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
 
 @Composable
 fun BlockCard (block: Block) {
@@ -77,12 +97,11 @@ fun BlockCardPreview () {
         Row(
             modifier = Modifier.padding(1.dp)
         ) {
-            // loop through the instanciated blocks
-            /*
+
             LazyRow(
                 modifier = Modifier.padding(5.dp)
             ) { items(blocks) { block -> BlockCard(block) } }
-            */
+
             BlockCard(block = block)
             BlockCard(block2)
         }

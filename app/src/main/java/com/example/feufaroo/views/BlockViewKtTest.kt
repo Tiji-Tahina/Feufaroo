@@ -1,9 +1,8 @@
 package com.example.feufaroo.views
 
-import org.junit.Rule
+import android.util.Log
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.*
-import org.junit.rules.TemporaryFolder
 
 class BlockViewKtTest{
     @Test
@@ -12,15 +11,11 @@ class BlockViewKtTest{
         assertEquals("|", file[0])
     }
 
-    fun main(args: Array<String>) {
-        for (i in 1..5) {
-            println(i)
-        }
-    }
+    @Test
+    fun testBlocks(){
+        val blocks = createBlocks(textLines, separators, endBlock, lyrics)
 
-    fun main(){
-        for (i in 1..56){
-            print("ok")
-        }
+        val block = Block(separator = ":", choir = mutableListOf("s₁","m₁","d","d₁"))
+        assertEquals(block.separator, blocks[0].separator)
     }
 }
