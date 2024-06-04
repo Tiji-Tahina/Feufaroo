@@ -32,11 +32,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             FeufarooTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier.padding(5.dp)) {
-                        Greeting(
-                            name = "Android",
-                            modifier = Modifier.padding(innerPadding)
-                        )
+                    Row(modifier = Modifier.padding(innerPadding)) {
+//                        Greeting(
+//                            name = "Android",
+//                            modifier = Modifier.padding(innerPadding)
+//                        )
+                        
+                        BlockCard(block = block)
+                        BlockCard(block = block2)
+                        
 //                        LazyRow(modifier = Modifier.padding(5.dp)) {
 //                            items(blocks) { block -> BlockCard(block) }
 //                        }

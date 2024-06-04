@@ -14,13 +14,21 @@ import androidx.compose.ui.unit.dp
 import com.example.feufaroo.ui.theme.FeufarooTheme
 import java.io.File
 
-
 // TODO: use the context with permissions but not absolute path like that
-var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\com\\example\\feufaroo\\assets\\ProjectTemplateSample.txt"
-fun readFileLine(fileName: String): List<String> = File(fileName).bufferedReader().readLines()
 
-//Maybe clean the data
-val textLines = readFileLine(fileName)
+// read from assets does not work
+//val inputStream = context.assets.open("your_file.txt")
+//val text = inputStream.bufferedReader().use { it.readText() }
+
+// using raw resource
+//val resourceId = resources.getIdentifier("my_text_file", "raw", packageName)
+//val inputStream = resources.openRawResource(resourceId)
+//val text = inputStream.bufferedReader().use { it.readText() }
+
+
+var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\com\\example\\feufaroo\\assets\\ProjectTemplateSample.txt"
+val textLines = File(fileName).bufferedReader().readLines()
+
 // parameters for that specific template sample
 val separators = listOf(":", "|", "/")
 const val endBlock = "===="
