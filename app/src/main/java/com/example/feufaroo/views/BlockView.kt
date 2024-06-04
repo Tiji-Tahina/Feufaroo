@@ -54,8 +54,7 @@ fun createBlocks(textLines: List<String>, separator: List<String>, endBlock: Str
     return blocks
 }
 
-// creates a double in the test somehow
-//val blocks = createBlocks(textLines, separators, endBlock, lyrics)
+val blocks = createBlocks(textLines, separators, endBlock, lyrics)
 
 // Dummy blocks for tests
 //var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
@@ -104,9 +103,9 @@ fun BlockCardPreview () {
             modifier = Modifier.padding(1.dp)
         ) {
 
-//            LazyRow(
-//                modifier = Modifier.padding(5.dp)
-//            ) { items(blocks) { block -> BlockCard(block) } }
+            LazyRow(
+                modifier = Modifier.padding(5.dp)
+            ) { items(blocks) { block -> BlockCard(block) } }
 //
 //            BlockCard(block = block)
 //            BlockCard(block2)
