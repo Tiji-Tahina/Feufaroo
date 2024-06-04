@@ -30,7 +30,7 @@ const val lyrics = "[]" // just skip it for now
 var beginLine = 0
 var endLine = 6
 
-fun createBlocks(textLines: List<String>, separator: List<String>, endBlock: String, lyrics: String) : MutableList<Block> {
+fun createBlocks(textLines: List<String>, separators: List<String>, endBlock: String, lyrics: String) : MutableList<Block> {
     val blocks : MutableList<Block> = mutableListOf()
 
     // TODO: define a logic for the number of objects
@@ -57,8 +57,8 @@ fun createBlocks(textLines: List<String>, separator: List<String>, endBlock: Str
 val blocks = createBlocks(textLines, separators, endBlock, lyrics)
 
 // Dummy blocks for tests
-//var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
-//var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
+var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
+var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
 
 @Composable
 fun BlockCard (block: Block) {
@@ -103,9 +103,9 @@ fun BlockCardPreview () {
             modifier = Modifier.padding(1.dp)
         ) {
 
-            LazyRow(
-                modifier = Modifier.padding(5.dp)
-            ) { items(blocks) { block -> BlockCard(block) } }
+            LazyRow(modifier = Modifier.padding(5.dp)) {
+                items(blocks) { block -> BlockCard(block) }
+            }
 //
 //            BlockCard(block = block)
 //            BlockCard(block2)
