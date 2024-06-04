@@ -36,27 +36,30 @@ fun createBlocks(textLines: List<String>, separator: List<String>, endBlock: Str
     // TODO: define a logic for the number of objects
     for (i in 1..48){
         val block = Block()
-        // for a single block should not go through all the entries of textLines
-        for (line in textLines){
+
+        for (line in textLines.slice(beginLine..endLine)){
             when (line) {
                 in separators -> block.separator = line
                 lyrics -> continue
                 endBlock -> break
-                else -> block.choir.add(line)    // all valid notes not listed (yet) / maybe find match with regex
+                else -> block.choir.add(line)    // test validity of the solfa
             }
-            // we have to keep track of the lines in between the objects
-            blocks.add(block)
         }
+        blocks.add(block)
+        endLine++
+        beginLine = endLine
+        endLine += 6
 
     }
     return blocks
 }
 
-val blocks = createBlocks(textLines, separators, endBlock, lyrics)
+// creates a double in the test somehow
+//val blocks = createBlocks(textLines, separators, endBlock, lyrics)
 
 // Dummy blocks for tests
-var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
-var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
+//var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
+//var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
 
 @Composable
 fun BlockCard (block: Block) {
@@ -101,12 +104,12 @@ fun BlockCardPreview () {
             modifier = Modifier.padding(1.dp)
         ) {
 
-            LazyRow(
-                modifier = Modifier.padding(5.dp)
-            ) { items(blocks) { block -> BlockCard(block) } }
-
-            BlockCard(block = block)
-            BlockCard(block2)
+//            LazyRow(
+//                modifier = Modifier.padding(5.dp)
+//            ) { items(blocks) { block -> BlockCard(block) } }
+//
+//            BlockCard(block = block)
+//            BlockCard(block2)
         }
     }
 }
