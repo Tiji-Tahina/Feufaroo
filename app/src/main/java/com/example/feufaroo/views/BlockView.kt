@@ -27,6 +27,9 @@ const val endBlock = "===="
 // TODO: work on logic behind lyrics
 const val lyrics = "[]" // just skip it for now
 
+var beginLine = 0
+var endLine = 6
+
 fun createBlocks(textLines: List<String>, separator: List<String>, endBlock: String, lyrics: String) : MutableList<Block> {
     val blocks : MutableList<Block> = mutableListOf()
 
