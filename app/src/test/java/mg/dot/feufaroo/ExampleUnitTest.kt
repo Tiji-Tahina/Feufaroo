@@ -1,4 +1,4 @@
-package com.example.feufaroo
+package mg.dot.feufaroo
 
 import org.junit.Test
 

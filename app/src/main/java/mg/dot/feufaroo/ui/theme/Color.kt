@@ -1,4 +1,4 @@
-package com.example.feufaroo.ui.theme
+package mg.dot.feufaroo.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.example.feufaroo.views
+package mg.dot.feufaroo.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

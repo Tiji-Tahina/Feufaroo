@@ -1,4 +1,4 @@
-package com.example.feufaroo
+package mg.dot.feufaroo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

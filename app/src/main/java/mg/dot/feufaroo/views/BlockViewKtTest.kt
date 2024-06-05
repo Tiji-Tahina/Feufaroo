@@ -1,6 +1,5 @@
-package com.example.feufaroo.views
+package mg.dot.feufaroo.views
 
-import android.util.Log
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.*
 

@@ -1,4 +1,4 @@
-package com.example.feufaroo.views
+package mg.dot.feufaroo.views
 
 class Block(
     var marking: String = "",
