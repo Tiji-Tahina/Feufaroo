@@ -55,6 +55,7 @@ android {
 
 dependencies {
 
+    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")     // org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

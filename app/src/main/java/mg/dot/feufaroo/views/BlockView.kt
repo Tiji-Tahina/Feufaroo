@@ -1,5 +1,10 @@
 package mg.dot.feufaroo.views
 
+import android.content.ContentProvider
+import android.content.Context
+import android.content.res.Resources
+import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -11,31 +16,75 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContentProviderCompat.requireContext
+//import androidx.core.content.ContextCompat.getString
+import com.example.feufaroo.R
 import mg.dot.feufaroo.ui.theme.FeufarooTheme
 import java.io.File
+import kotlin.coroutines.coroutineContext
 //import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
-// TODO: use the context with permissions but not absolute path like that
 
-// read from assets does not work
-//val inputStream = context.assets.open("your_file.txt")
+// TODO: use the context with permissions but not absolute path like that
+val uri = Uri.parse("android.resource://res/raw/projecttemplatesample")
+val textLines = File(uri.path).bufferedReader().readLines()
+// Now you can read the file content from 'file'
+
+//
+//// Usage:
+//val fileContent = readAsset(requireContext(), "helloworld.txt")
+//Log.d("MyApp", "File content: $fileContent")
+
+/*
+// context does not work
+//val path = context.getFilesDir()
+
+// assets does not work
+// val inputStream = .assets.open("your_file.txt")
 //val text = inputStream.bufferedReader().use { it.readText() }
 
-// using raw resource
+// resources does not work (n°1)
 //val resourceId = resources.getIdentifier("my_text_file", "raw", packageName)
 //val inputStream = resources.openRawResource(resourceId)
 //val text = inputStream.bufferedReader().use { it.readText() }
 
-// mg dot
-var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\com\\example\\feufaroo\\assets\\projecttemplaterefactor.txt"
-val textLines = File(fileName).bufferedReader().readLines()
-//val textLines = object {}.javaClass.getResourceAsStream("projecttemplatesample.txt")?.bufferedReader()?.readLines()!!
+// alternative n°2 - maybe use a function to scope it ?
+//val textLines = getString(R.raw.projecttemplatesample)
+val resourceId = R.raw.projecttemplatesample
+val inputStream = resources.openRawResource(resourceId)
+val text = inputStream.bufferedReader().use { it.readText() }
 
-// parameters for that specific template sample
+// alternative n°2.1 : use uri
+...
+
+// alternative n°3 : // simple name because we are in the res folder ?
+// to be debugged
+//val textLines = object {}.javaClass.getResourceAsStream("projecttemplaterefactor.txt")?.bufferedReader()?.readLines()!!
+
+// alternative n°4 : learn more about content provider !!
+fun readAsset(context: Context, fileName: String): String {
+    val assetManager = context.assets
+    val inputStream = assetManager.open(fileName)
+    return inputStream.bufferedReader().use { it.readText() }
+}
+val provider = ContentProvider
+val fileContent = readAsset(requireContext(), "projecttemplatesample")
+
+*/
+
+// Now let's try the go through java approach
+
+
+
+// full path works in local
+//var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\mg\\dot\\feufaroo\\assets\\projecttemplaterefactor.txt"
+//val textLines = File(fileName).bufferedReader().readLines()
+
+// parameters for that file
 val separators = listOf(":", "|", "/")
 const val endBlock = "===="
 // TODO: work on logic behind lyrics
-const val lyrics = "[]" // just skip it for now
+const val lyrics = "[]"
 
 var beginLine = 0
 var endLine = 6
@@ -66,9 +115,10 @@ fun createBlocks(textLines: List<String>, separators: List<String>, endBlock: St
 
 val blocks = createBlocks(textLines, separators, endBlock, lyrics)
 
-// Dummy blocks for tests
+//*
 var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
 var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
+//*
 
 @Composable
 fun BlockCard (block: Block) {
