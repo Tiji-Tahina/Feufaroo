@@ -1,10 +1,5 @@
 package mg.dot.feufaroo.views
 
-import android.content.ContentProvider
-import android.content.Context
-import android.content.res.Resources
-import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -16,26 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContentProviderCompat.requireContext
-//import androidx.core.content.ContextCompat.getString
-import com.example.feufaroo.R
 import mg.dot.feufaroo.ui.theme.FeufarooTheme
 import java.io.File
-import kotlin.coroutines.coroutineContext
-//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 
 // TODO: use the context with permissions but not absolute path like that
-val uri = Uri.parse("android.resource://res/raw/projecttemplatesample")
-val textLines = File(uri.path).bufferedReader().readLines()
-// Now you can read the file content from 'file'
+/* does not work (n°1)
+//val resourceId = resources.getIdentifier("projecttemplaterefactor", "raw", packageName)
+//val inputStream = resources.openRawResource(resourceId)
+//val text = inputStream.bufferedReader().use { it.readText() }
 
-//
-//// Usage:
-//val fileContent = readAsset(requireContext(), "helloworld.txt")
-//Log.d("MyApp", "File content: $fileContent")
-
-/*
+// Attempts before context and proper Assets/Resource management
 // context does not work
 //val path = context.getFilesDir()
 
@@ -43,11 +29,7 @@ val textLines = File(uri.path).bufferedReader().readLines()
 // val inputStream = .assets.open("your_file.txt")
 //val text = inputStream.bufferedReader().use { it.readText() }
 
-// resources does not work (n°1)
-//val resourceId = resources.getIdentifier("my_text_file", "raw", packageName)
-//val inputStream = resources.openRawResource(resourceId)
-//val text = inputStream.bufferedReader().use { it.readText() }
-
+// resources
 // alternative n°2 - maybe use a function to scope it ?
 //val textLines = getString(R.raw.projecttemplatesample)
 val resourceId = R.raw.projecttemplatesample
@@ -55,7 +37,8 @@ val inputStream = resources.openRawResource(resourceId)
 val text = inputStream.bufferedReader().use { it.readText() }
 
 // alternative n°2.1 : use uri
-...
+val uri = Uri.parse("android.resource://res/raw/projecttemplatesample")
+val textLines = File(uri.path).bufferedReader().readLines()
 
 // alternative n°3 : // simple name because we are in the res folder ?
 // to be debugged
@@ -72,13 +55,11 @@ val fileContent = readAsset(requireContext(), "projecttemplatesample")
 
 */
 
-// Now let's try the go through java approach
-
 
 
 // full path works in local
-//var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\mg\\dot\\feufaroo\\assets\\projecttemplaterefactor.txt"
-//val textLines = File(fileName).bufferedReader().readLines()
+var fileName = "C:\\Users\\26134\\AndroidStudioProjects\\Feufaroo\\app\\src\\main\\java\\mg\\dot\\feufaroo\\assets\\projecttemplaterefactor.txt"
+val textLines = File(fileName).bufferedReader().readLines()
 
 // parameters for that file
 val separators = listOf(":", "|", "/")
