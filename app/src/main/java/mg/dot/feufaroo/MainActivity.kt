@@ -13,9 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import mg.dot.feufaroo.ui.theme.FeufarooTheme
-import mg.dot.feufaroo.views.BlockCard
-import mg.dot.feufaroo.views.block
-import mg.dot.feufaroo.views.block2
+//import mg.dot.feufaroo.views.BlockCard
+//import mg.dot.feufaroo.views.block
+//import mg.dot.feufaroo.views.block2
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,13 +25,13 @@ class MainActivity : ComponentActivity() {
             FeufarooTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Row(modifier = Modifier.padding(innerPadding)) {
-//                        Greeting(
-//                            name = "Android",
-//                            modifier = Modifier.padding(innerPadding)
-//                        )
-                        
-                        BlockCard(block = block)
-                        BlockCard(block = block2)
+                        Greeting(
+                            name = "Android",
+                            modifier = Modifier.padding(innerPadding)
+                        )
+//
+//                        BlockCard(block = block)
+//                        BlockCard(block = block2)
                         
 //                        LazyRow(modifier = Modifier.padding(5.dp)) {
 //                            items(blocks) { block -> BlockCard(block) }

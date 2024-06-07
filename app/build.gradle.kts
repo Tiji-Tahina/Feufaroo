@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.feufaroo"
+    namespace = "mg.dot.feufaroo"
     compileSdk = 34
 
     defaultConfig {

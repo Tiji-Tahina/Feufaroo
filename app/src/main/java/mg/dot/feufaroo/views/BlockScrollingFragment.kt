@@ -15,7 +15,7 @@ class BlockScrollingFragment : androidx.fragment.app.Fragment() {
         inputStream.read(buffer)
         return String(buffer)
     }
-    val fileContent = resources.getRawTextFile(R.raw.projecttemplaterefactor)
+    private val fileContent = resources.getRawTextFile(R.raw.projecttemplaterefactor)
     val textLinesFromText = fileContent.split("/n")
 
     override fun onCreateView(
