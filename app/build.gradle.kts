@@ -55,7 +55,6 @@ android {
 
 dependencies {
 
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")     // org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -68,6 +67,7 @@ dependencies {
     implementation("junit:junit:4.12")
     implementation("org.junit.jupiter:junit-jupiter:5.8.1")
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
