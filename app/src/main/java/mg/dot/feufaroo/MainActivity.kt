@@ -12,12 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import mg.dot.feufaroo.ui.theme.FeufarooTheme
-import mg.dot.feufaroo.views.BlockScrollingFragment
+import mg.dot.feufaroo.views.DisplayAllCard
 
 
 class MainActivity : ComponentActivity() {
@@ -34,6 +33,7 @@ class MainActivity : ComponentActivity() {
                     Row(modifier = Modifier.padding(innerPadding)) {
 
                         AppNavigation()
+
                         Greeting(
                             name = "Android",
                             modifier = Modifier.padding(innerPadding)
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = "myFragment") {
-        composable("myFragment") { BlockScrollingFragment() }
+        composable("myFragment") { DisplayAllCard() }
         // Add other destinations here
     }
 }

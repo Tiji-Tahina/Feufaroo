@@ -1,9 +1,5 @@
 package mg.dot.feufaroo.views
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -13,35 +9,48 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import mg.dot.feufaroo.R
 import mg.dot.feufaroo.ui.theme.FeufarooTheme
 
-class BlockScrollingFragment : androidx.fragment.app.Fragment() {
+// parameters for that file
+val separators = listOf(":", "|", "/")
+const val endBlock = "===="
+// TODO: work on logic behind lyrics
+const val lyrics = "[]"
 
-    private fun getRawTextFile( resourceId: Int): String {
-        val inputStream = resources.openRawResource(resourceId)
-        val buffer = ByteArray(inputStream.available())
-        inputStream.read(buffer)
-        return String(buffer)
-    }
-    private val fileContent = getRawTextFile(R.raw.projecttemplaterefactor)
-    val textLinesFromText = fileContent.split("/n")
+var beginLine = 0
+var endLine = 6
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply{
-            setContent {
-                Text(text = "Hello BlockScrollingFragment here !")
+fun createBlocks(textLines: List<String>, separators: List<String>, endBlock: String, lyrics: String) : MutableList<Block> {
+    val blocks : MutableList<Block> = mutableListOf()
+
+    // TODO: define a logic for the number of objects
+    for (i in 1..48){
+        val block = Block()
+
+        for (line in textLines.slice(beginLine..endLine)){
+            when (line) {
+                in separators -> block.separator = line
+                lyrics -> continue
+                endBlock -> break
+                else -> block.choir.add(line)    // test validity of the solfa
             }
         }
+        blocks.add(block)
+        endLine++
+        beginLine = endLine
+        endLine += 6
+
     }
+    return blocks
 }
+
+
+//var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
+//var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
 
 @Composable
 fun BlockCard (block: Block) {
@@ -78,6 +87,26 @@ fun ChoirComponent(choir : List<String>){
     }
 }
 
+@Composable
+fun DisplayAllCard(){
+
+    val context = LocalContext.current
+    fun getRawTextFile( resourceId: Int): String {
+        val inputStream = context.resources.openRawResource(resourceId)
+        val buffer = ByteArray(inputStream.available())
+        inputStream.read(buffer)
+        return String(buffer)
+    }
+    val fileContent = getRawTextFile(R.raw.projecttemplaterefactor)
+    val textLines = fileContent.split("\r\n")
+
+    val blocks = createBlocks(textLines, separators, endBlock, lyrics)
+
+    LazyRow(modifier = Modifier.padding(5.dp)) {
+        items(blocks) { block -> BlockCard(block) }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun BlockCardPreview () {
@@ -85,7 +114,7 @@ fun BlockCardPreview () {
         Row(
             modifier = Modifier.padding(1.dp)
         ) {
-            BlockCard(block = block)
+//            BlockCard(block = block)
 //            BlockCard(block2)
 
 
