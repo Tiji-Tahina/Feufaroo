@@ -68,6 +68,7 @@ dependencies {
     implementation("org.junit.jupiter:junit-jupiter:5.8.1")
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
