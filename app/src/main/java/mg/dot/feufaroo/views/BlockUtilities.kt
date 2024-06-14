@@ -1,12 +1,20 @@
 package mg.dot.feufaroo.views
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -48,8 +56,7 @@ fun createBlocks(textLines: List<String>, separators: List<String>, endBlock: St
     return blocks
 }
 
-
-//var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
+var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
 //var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
 
 @Composable
@@ -63,40 +70,74 @@ fun BlockCard (block: Block) {
     }
 }
 
+// Change one and make the others follow
 @Composable
 fun SeparatorComponent(separator : String){
     Column(
         modifier = Modifier.padding(4.dp)
     ){
-        Text(separator, onTextLayout = {})
-        Text(separator, onTextLayout = {})
-        Text(separator, onTextLayout = {})
-        Text(separator, onTextLayout = {})
+        // ok now we make them into small textfields
+        Text(separator)
+        Text(separator)
+        Text(separator)
+        Text(separator)
     }
 }
 
 @Composable
 fun ChoirComponent(choir : List<String>){
+
+    var text1 by remember { mutableStateOf(choir[0]) }
+    var text2 by remember { mutableStateOf(choir[1]) }
+    var text3 by remember { mutableStateOf(choir[2]) }
+    var text4 by remember { mutableStateOf(choir[3]) }
+
     Column (
         modifier = Modifier.padding(4.dp)
     ){
-        Text(text = choir[0], onTextLayout = {})
-        Text(text = choir[1], onTextLayout = {})
-        Text(text = choir[2], onTextLayout = {})
-        Text(text = choir[3], onTextLayout = {})
+        BasicTextField(
+            value = text1,
+            onValueChange = { newText ->
+                text1 = newText
+            },
+            modifier = Modifier.width(IntrinsicSize.Min)
+        )
+        BasicTextField(
+            value = text2,
+            onValueChange = { newText ->
+                text2 = newText
+            },
+            modifier = Modifier.width(IntrinsicSize.Min)
+        )
+        BasicTextField(
+            value = text3,
+            onValueChange = { newText ->
+                text3 = newText
+            },
+            modifier = Modifier.width(IntrinsicSize.Min)
+        )
+        BasicTextField(
+            value = text4,
+            onValueChange = { newText ->
+                text4 = newText
+            },
+            modifier = Modifier.width(IntrinsicSize.Min)
+        )
     }
 }
 
 @Composable
-fun DisplayAllCard(){
+fun DisplayAllCards(){
 
     val context = LocalContext.current
+
     fun getRawTextFile( resourceId: Int): String {
         val inputStream = context.resources.openRawResource(resourceId)
         val buffer = ByteArray(inputStream.available())
         inputStream.read(buffer)
         return String(buffer)
     }
+
     val fileContent = getRawTextFile(R.raw.projecttemplaterefactor)
     val textLines = fileContent.split("\r\n")
 
@@ -105,22 +146,12 @@ fun DisplayAllCard(){
     LazyRow(modifier = Modifier.padding(5.dp)) {
         items(blocks) { block -> BlockCard(block) }
     }
+
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun BlockCardPreview () {
-    FeufarooTheme {
-        Row(
-            modifier = Modifier.padding(1.dp)
-        ) {
-//            BlockCard(block = block)
-//            BlockCard(block2)
-
-
-//            LazyRow(modifier = Modifier.padding(5.dp)) {
-//                items(blocks) { block -> BlockCard(block) }
-//            }
-        }
-    }
+fun DisplayAllCardsPreview() {
+    DisplayAllCards()
+    //BlockCard(block = block)
 }

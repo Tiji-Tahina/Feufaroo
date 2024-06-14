@@ -16,7 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import mg.dot.feufaroo.ui.theme.FeufarooTheme
-import mg.dot.feufaroo.views.DisplayAllCard
+import mg.dot.feufaroo.views.DisplayAllCards
 
 
 class MainActivity : ComponentActivity() {
@@ -34,10 +34,10 @@ class MainActivity : ComponentActivity() {
 
                         AppNavigation()
 
-                        Greeting(
-                            name = "Android",
-                            modifier = Modifier.padding(innerPadding)
-                        )
+//                        Greeting(
+//                            name = "Android",
+//                            modifier = Modifier.padding(innerPadding)
+//                        )
                     }
 
                 }
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = "myFragment") {
-        composable("myFragment") { DisplayAllCard() }
+        composable("myFragment") { DisplayAllCards() }
         // Add other destinations here
     }
 }
