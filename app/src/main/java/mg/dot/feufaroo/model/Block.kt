@@ -1,10 +1,11 @@
 package mg.dot.feufaroo.model
 
 class Block {
+    var choir: MutableList<String> = mutableListOf()
     var noteWidth: Int = 0
     var width: String = ""
 
-    private var separator: String = ""
+    var separator: String = ""
     var nbNote: Int = 0
     private var nbLyrics: Int = 0
     private var marker: Any? = null

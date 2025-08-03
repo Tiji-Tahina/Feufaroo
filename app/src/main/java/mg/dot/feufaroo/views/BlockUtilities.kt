@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import mg.dot.feufaroo.R
+// import mg.dot.feufaroo.model.Block
 
 // parameters for that file
 val separators = listOf(":", "|", "/")
@@ -27,30 +28,54 @@ const val endBlock = "===="
 // TODO: work on logic behind lyrics
 const val lyrics = "[]"
 
-var beginLine = 0
-var endLine = 6
 
 fun createBlocks(textLines: List<String>, separators: List<String>, endBlock: String, lyrics: String) : MutableList<Block> {
-    val blocks : MutableList<Block> = mutableListOf()
+    val blocks = mutableListOf<Block>()
+    var beginLine = 0
+    val blockSize = 6
 
-    // TODO: define a logic for the number of objects
-    for (i in 1..48){
-        val block = Block()
+    println(beginLine)
 
-        for (line in textLines.slice(beginLine..endLine)){
-            when (line) {
-                in separators -> block.separator = line
-                lyrics -> continue
-                endBlock -> break
-                else -> block.choir.add(line)    // test validity of the solfa
+    while (beginLine + blockSize <= textLines.size) {
+        val blockLines = textLines.slice(beginLine until beginLine + blockSize)
+
+        var separator = ""
+        val choir = mutableListOf<String>()
+        val lyrics = "[]"
+
+        for (line in blockLines) {
+            when {
+                line in separators -> separator = line
+                line == endBlock -> continue
+                line == lyrics -> continue
+                else -> choir.add(line)
             }
         }
-        blocks.add(block)
-        endLine++
-        beginLine = endLine
-        endLine += 6
 
+        blocks.add(Block(separator = separator, choir = choir, lyrics = lyrics))
+        beginLine += blockSize
     }
+
+
+
+    // TODO: define a logic for the number of objects
+//    for (i in 1..48){
+//        val block = Block()
+//
+//        for (line in textLines.slice(beginLine..endLine)){
+//            when (line) {
+//                in separators -> block.separator = line
+//                lyrics -> continue
+//                endBlock -> break
+//                else -> block.choir.add(line)    // test validity of the solfa
+//            }
+//        }
+//        blocks.add(block)
+//        endLine++
+//        beginLine = endLine
+//        endLine += 6
+//
+//    }
     return blocks
 }
 
@@ -58,19 +83,7 @@ var block = Block(separator = ":", choir = mutableListOf("s1","m1","d","d1"))
 //var block2 = Block(separator = ":", choir = mutableListOf("f","l1","l1","r1"))
 
 @Composable
-fun BlockCard (block: Block) {
-    Row (
-        modifier = Modifier.padding(vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        SeparatorComponent(block.separator)
-        ChoirComponent(block.choir)
-    }
-}
-
-// Change one and make the others follow
-@Composable
-fun SeparatorComponent(separator : String){
+fun SeparatorComponent(separator: String) {
     Column(
         modifier = Modifier.padding(4.dp)
     ){
@@ -80,6 +93,7 @@ fun SeparatorComponent(separator : String){
         Text(separator)
         Text(separator)
     }
+
 }
 
 @Composable
@@ -125,6 +139,18 @@ fun ChoirComponent(choir : List<String>){
 }
 
 @Composable
+fun BlockCard (block: Block) {
+    Row (
+        modifier = Modifier.padding(vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        SeparatorComponent(block.separator)
+        ChoirComponent(block.choir)
+    }
+}
+
+
+@Composable
 fun DisplayAllCards(){
 
     val context = LocalContext.current
@@ -137,7 +163,7 @@ fun DisplayAllCards(){
     }
 
     val fileContent = getRawTextFile(R.raw.projecttemplaterefactor)
-    val textLines = fileContent.split("\r\n")
+    val textLines = fileContent.split('\r','\n')
 
     val blocks = createBlocks(textLines, separators, endBlock, lyrics)
 
@@ -147,7 +173,7 @@ fun DisplayAllCards(){
 
 }
 
-@Preview
+@Preview(name ="API 21", apiLevel = 34)
 @Composable
 fun DisplayAllCardsPreview() {
     DisplayAllCards()

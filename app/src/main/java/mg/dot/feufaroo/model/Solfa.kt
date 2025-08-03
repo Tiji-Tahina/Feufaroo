@@ -3,6 +3,7 @@ package mg.dot.feufaroo.model
 import java.util.Locale
 
 class Solfa {
+
     private lateinit var separators: List<String>
     private lateinit var fileData : Map<String, MutableList<String>>
     private lateinit var meta : MutableMap<String?, String?>
@@ -26,6 +27,7 @@ class Solfa {
     constructor(options : MutableMap<String, Any>) {
         // redoing the
         this.options = options
+
         // val sourceFile = File(path)
         // val sourceAsArray : List<String> = sourceFile.readLines()
         // arrayWalk(sourceAsArray, MutableList(this, "parseAllLines"));
@@ -209,20 +211,51 @@ class Solfa {
     }
 
 
-    private fun getSubNotes(nbNote : Int): MutableList<MutableList<MutableList<String>>> {
-        if (nbNote == 0){
-            val noteSize = this.note.size
-            val subNote = MutableList(noteSize) { mutableListOf("") }
-            val resultList = mutableListOf(subNote, mutableListOf()) // SubMark
-            return resultList
+//    private fun getSubNotes(nbNote : Int): MutableList<MutableList<MutableList<String>>> {
+//        if (nbNote == 0){
+//            val noteSize = this.note.size
+//            val subNote = MutableList(noteSize) { mutableListOf("") }
+//            val resultList = mutableListOf(subNote, mutableListOf()) // SubMark
+//            return resultList
+//        }
+//        val subNote = mutableListOf("")
+//        this.note.forEachIndexed() { kNote, vNote ->
+//            subNote[kNote] = vNote.slice(this.iNote..nbNote)
+//            val mark = mutableListOf("")
+//            for(i in this.iNote .. this.iNote + nbNote ){
+//                if (this.noteMarq)
+//            }
+//        }
+//    }
+private fun getSubNotes(nbNote: Int): MutableList<MutableList<MutableList<MutableList<String>>>> {
+    val subNotes = mutableListOf<MutableList<MutableList<String>>>()
+    val subMarks = mutableListOf<MutableList<MutableList<String>>>()
+
+    // for each choir line (vertical column)
+    for (i in 0 until nbNote) {
+        val noteColumn = mutableListOf<MutableList<String>>()
+        val markColumn = mutableListOf<MutableList<String>>()
+
+        for (j in 0 until this.note.size) {
+            val notesInLine = this.note[j].split(",").map { it.trim() }
+            val note = notesInLine.getOrNull(this.iNote + i) ?: ""
+            noteColumn.add(mutableListOf(note))
+
+            val marksInLine = if (j < this.marker.size)
+                this.marker[j].split(",").map { it.trim() }
+            else
+                listOf()
+
+            val mark = marksInLine.getOrNull(this.iNote + i) ?: ""
+            markColumn.add(mutableListOf(mark))
         }
-        val subNote = mutableListOf("")
-        this.note.forEachIndexed() { kNote, vNote ->
-            subNote[kNote] = vNote.slice(this.iNote..nbNote)
-            val mark = mutableListOf("")
-            for(i in this.iNote .. this.iNote + nbNote ){
-                if (this.noteMarq)
-            }
-        }
+
+        subNotes.add(noteColumn)
+        subMarks.add(markColumn)
     }
+
+    return mutableListOf(subNotes, subMarks)
+}
+
+
 }
