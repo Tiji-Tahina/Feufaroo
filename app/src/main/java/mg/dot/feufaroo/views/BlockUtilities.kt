@@ -32,7 +32,7 @@ const val lyrics = "[]"
 fun createBlocks(textLines: List<String>, separators: List<String>, endBlock: String, lyrics: String) : MutableList<Block> {
     val blocks = mutableListOf<Block>()
     var beginLine = 0
-    val blockSize = 6
+    val blockSize = 7
 
     println(beginLine)
 
@@ -44,10 +44,10 @@ fun createBlocks(textLines: List<String>, separators: List<String>, endBlock: St
         val lyrics = "[]"
 
         for (line in blockLines) {
-            when {
-                line in separators -> separator = line
-                line == endBlock -> continue
-                line == lyrics -> continue
+            when (line) {
+                in separators -> separator = line
+                endBlock -> continue
+                lyrics -> continue
                 else -> choir.add(line)
             }
         }
@@ -55,27 +55,6 @@ fun createBlocks(textLines: List<String>, separators: List<String>, endBlock: St
         blocks.add(Block(separator = separator, choir = choir, lyrics = lyrics))
         beginLine += blockSize
     }
-
-
-
-    // TODO: define a logic for the number of objects
-//    for (i in 1..48){
-//        val block = Block()
-//
-//        for (line in textLines.slice(beginLine..endLine)){
-//            when (line) {
-//                in separators -> block.separator = line
-//                lyrics -> continue
-//                endBlock -> break
-//                else -> block.choir.add(line)    // test validity of the solfa
-//            }
-//        }
-//        blocks.add(block)
-//        endLine++
-//        beginLine = endLine
-//        endLine += 6
-//
-//    }
     return blocks
 }
 
@@ -173,7 +152,7 @@ fun DisplayAllCards(){
 
 }
 
-@Preview(name ="API 21", apiLevel = 34)
+@Preview(apiLevel = 34)
 @Composable
 fun DisplayAllCardsPreview() {
     DisplayAllCards()
